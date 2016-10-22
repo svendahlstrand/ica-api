@@ -41,7 +41,7 @@ Du använder HTTP Basic authentication med användarnamn och lösenord som du
       "LastName": "Doe",
       "Ttl": 1200
     }
-    
+
 ## /api/user/minasidor
 
 Ta reda på information som rör ditt konto, saldo och rabatt.
@@ -115,7 +115,7 @@ Information om en butik.
             "OtherOpeningHours": null
         }
     }
-    
+
 ## /api/offers?Stores=XXXX
 
 Listar dina erbjudanden och kuponger. Det går att skicka in flera butiks id. Separera då med komma.
@@ -159,7 +159,7 @@ Listar dina erbjudanden och kuponger. Det går att skicka in flera butiks id. Se
             }
         ]
     }
-    
+
 ## /api/user/shoppinglists
 
 Lista över inköpslistor
@@ -175,7 +175,7 @@ Lista över inköpslistor
             }
         ]
     }
-    
+
 ## /api/user/shoppinglist/XXXXXX
 
 Innehållet i en inköpslista. Ersätt XXXXXX med inköpslistans Id
@@ -204,7 +204,7 @@ Innehållet i en inköpslista. Ersätt XXXXXX med inköpslistans Id
             ...
         ]
     }
-    
+
 ## /api/recipes/categories/general
 
 Listar namn på recept kategorier.
@@ -309,10 +309,10 @@ Recept i kategori.
             }
         ]
     }
-    
+
 ## /api/recipes/recipe/XXXXXX
 
-Information om ett recept. 
+Information om ett recept.
 
     GET /api/recipes/recipe/713666
     < 200
@@ -359,5 +359,3 @@ Betyg från användare
     {
         "CurrentUserRating": 0
     }
-    
-        
