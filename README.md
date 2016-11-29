@@ -41,22 +41,23 @@ Först och främst behövs en `AuthenticationTicket` som används för att tala 
 vem du är. Den får du genom ett `GET`-anrop till `/api/login`. Skicka med
 använarnamn och lösenord med hjälp av HTTP Basic authentication.
 
-    $ curl -i -u 7001011234:567 https://api.ica.se/api/login/
-    HTTP/1.1 200 OK
-    Cache-Control: no-cache
-    Pragma: no-cache
-    Content-Type: application/json; charset=utf-8
-    Expires: -1
-    Server: Microsoft-IIS/7.5
-    AuthenticationTicket: 8D66EA[..]
-    SessionTicket: 4F1E80[..]
-    LogoutKey: 59068e[..]
-    X-AspNet-Version: 4.0.30319
-    X-Powered-By: ASP.NET
-    Date: Sun, 07 Apr 2013 18:44:24 GMT
-    Content-Length: 55
-
-    {"FirstName":"John","LastName":"Doe","Ttl":1200}
+```bash
+$ curl -i -u 7001011234:567 https://api.ica.se/api/login/
+HTTP/1.1 200 OK
+Cache-Control: no-cache
+Pragma: no-cache
+Content-Type: application/json; charset=utf-8
+Expires: -1
+Server: Microsoft-IIS/7.5
+AuthenticationTicket: 8D66EA[..]
+SessionTicket: 4F1E80[..]
+LogoutKey: 59068e[..]
+X-AspNet-Version: 4.0.30319
+X-Powered-By: ASP.NET
+Date: Sun, 07 Apr 2013 18:44:24 GMT
+Content-Length: 55
+{"FirstName":"John","LastName":"Doe","Ttl":1200}
+```
 
 Bland svarets response headers hittar du din `AuthenticationTicket`. Spar den
 till nästföljande anrop.
@@ -67,21 +68,23 @@ Nu ha du allt som behövs för att ställa frågor till API:et. Prova ett `GET`-
 till `/api/user/minasidor` och skicka med din `AuthenticationTicket` som en
 request header.
 
-    $ curl \
-      -H 'AuthenticationTicket: 8D66EA[..]' \
-      https://api.ica.se/api/user/minasidor/
-    HTTP/1.1 200 OK
-    Cache-Control: no-cache
-    Pragma: no-cache
-    Content-Type: application/json; charset=utf-8
-    Expires: -1
-    Server: Microsoft-IIS/7.5
-    X-AspNet-Version: 4.0.30319
-    X-Powered-By: ASP.NET
-    Date: Sun, 07 Apr 2013 18:58:17 GMT
-    Content-Length: 303
+```bash
+$ curl \
+  -H 'AuthenticationTicket: 8D66EA[..]' \
+  https://api.ica.se/api/user/minasidor/
+HTTP/1.1 200 OK
+Cache-Control: no-cache
+Pragma: no-cache
+Content-Type: application/json; charset=utf-8
+Expires: -1
+Server: Microsoft-IIS/7.5
+X-AspNet-Version: 4.0.30319
+X-Powered-By: ASP.NET
+Date: Sun, 07 Apr 2013 18:58:17 GMT
+Content-Length: 303
 
-    {"Saldo":0.0,"YearlyTotalPurchased":10000.00,"AcquiredDiscount":100.00,"AmountSinceLastBonusCheck":0.0,"AmountLeftUntilNextBonusCheck":2000.0,"NextBonusCheckValue":0.0,"AcquiredBonus":150.00,"IcaBankUrl":"http://mobil.icabanken.se","AccountNumber":"123 456 789","AvailableAmount":0.00,"CreditLimit":0.0}
+{"Saldo":0.0,"YearlyTotalPurchased":10000.00,"AcquiredDiscount":100.00,"AmountSinceLastBonusCheck":0.0,"AmountLeftUntilNextBonusCheck":2000.0,"NextBonusCheckValue":0.0,"AcquiredBonus":150.00,"IcaBankUrl":"http://mobil.icabanken.se","AccountNumber":"123 456 789","AvailableAmount":0.00,"CreditLimit":0.0}
+```
 
 Svaret får du i JSON. Här ser du till exempel hur mycket du har handlat för i år
 och din intjänade bonus.
