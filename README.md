@@ -69,7 +69,7 @@ request header.
 
     $ curl \
       -H 'AuthenticationTicket: 8D66EA[..]' \
-      http://api.ica.se/api/user/minasidor/
+      https://api.ica.se/api/user/minasidor/
     HTTP/1.1 200 OK
     Cache-Control: no-cache
     Pragma: no-cache
