@@ -439,9 +439,9 @@ GET /api/recipes/categories/general
 Visa recept i kategori. Ersätt {categoryId} med id från en av kategorierna från endpoint ovan.
 
 ```
-    GET /api/recipes/categories/general/88?RecordsPerPage=30&PageNumber=1&Include=ImageId,Title,CookingTime,AverageRating,OfferCount,IngredientCount
-    > AuthenticationTicket: [...]
-    < 200
+GET /api/recipes/categories/general/88?RecordsPerPage=30&PageNumber=1&Include=ImageId,Title,CookingTime,AverageRating,OfferCount,IngredientCount
+> AuthenticationTicket: [...]
+< 200
 ```
 ```
 {
@@ -471,9 +471,9 @@ Visa recept i kategori. Ersätt {categoryId} med id från en av kategorierna fr�
 Sök efter recept. Ersätt {phrase} med sökord i recept du söker efter.
 
 ```
-    GET /api/recipes/search?RecordsPerPage=40&PageNumber=1&Phrase=pizza&Include=ImageId,Title,CookingTime,AverageRating,OfferCount,IngredientCount
-    > AuthenticationTicket: [...]
-    < 200
+GET /api/recipes/search?RecordsPerPage=40&PageNumber=1&Phrase=pizza&Include=ImageId,Title,CookingTime,AverageRating,OfferCount,IngredientCount
+> AuthenticationTicket: [...]
+< 200
 ```
 ```
 {
@@ -608,9 +608,9 @@ GET /api/recipes/recipe/713666
 Betyg från användare.
 
 ```
-    GET /api/recipes/716405/rating
-    > AuthenticationTicket: [...]
-    < 200
+GET /api/recipes/716405/rating
+> AuthenticationTicket: [...]
+< 200
 ```
 ```json
 {
