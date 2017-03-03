@@ -73,6 +73,63 @@ GET /api/user/minasidor
 }
 ```
 
+## /api/user/cardaccounts
+
+Visa vilka kort som är registrerade för den inloggade användaren.
+
+```
+GET /api/user/cardaccounts
+> AuthenticationTicket: 225DC3[..]
+< 200
+```
+```json
+{
+  "CustomerNumber": 123456,
+  "Cards": [
+    {
+      "Accounts": null,
+      "CardTypeDescription": "ICA KUNDKORT UTAN BETALA",
+      "CardTypeCode": "90",
+      "MaskedCardNumber": "0123",
+      "Selected": false
+    }
+  ]
+}
+```
+
+## /api/user/recipes
+
+Ta fram dina sparade recept.
+
+```
+GET /api/user/recipes
+> AuthenticationTicket: 225DC3[..]
+< 200
+```
+```json
+{
+  "RecipeIds": [
+    720948,
+    720947,
+    721249
+  ],
+  "UserRecipes": [
+    {
+      "RecipeId": 720948,
+      "CreationDate": "2016-12-01T14:05:42"
+    },
+    {
+      "RecipeId": 720947,
+      "CreationDate": "2016-12-01T14:05:42"
+    },
+    {
+      "RecipeId": 721249,
+      "CreationDate": "2016-12-01T14:05:42"
+    }
+  ]
+}
+```
+
 ## /api/user/stores
 
 De butiker som du oftast besöker.
@@ -134,6 +191,65 @@ GET /api/stores/1
 }
 ```
 
+## /api/stores/?LastSyncDate={timestamp}
+
+Visa ICA butiker. Ersätt {timestamp} med en tidsstämpel.
+
+**OBS! Tung request som returnerar mycket data!**
+
+```
+GET /api/stores/?LastSyncDate=2014-12-01%2010:16:33
+> AuthenticationTicket: 225DC3[..]
+< 200
+```
+```json
+{
+  "Stores": [
+    {
+      "Id": 1,
+      "StoreName": "ICA Nära Lill-ICA",
+      "Address": {
+        "Street": "Dalgatan 5",
+        "Zip": "933 33",
+        "City": "ARVIDSJAUR"
+      },
+      "Coordinates": {
+        "Latitude": 65.59017,
+        "Longitude": 19.19496
+      },
+      "IsActive": true,
+      "ProfileId": "04",
+      "ShoppingRound": "12,4,3,6,10,5,9,11,7,8",
+      "ShoppingRoundType": 1,
+      "DefaultShoppingRound": true,
+      "StoreMapActive": false
+    },
+    ...
+    ]
+}
+```
+
+## /api/stores/search?Filters&Phrase={phrase}
+
+Sök efter ICA butiker, ersätt {phrase} med ett sökord.
+
+```
+GET /api/stores/search?Filters&Phrase=lidköping
+> AuthenticationTicket: 225DC3[..]
+< 200
+```
+```json
+{
+  "Stores": [
+    2043,
+    2050,
+    2044,
+    2046,
+    2014
+  ]
+}
+```
+
 ## /api/offers?Stores=XXXX
 
 Listar dina erbjudanden och kuponger. Det går att skicka in flera butiks id. Separera då med komma.
@@ -184,7 +300,7 @@ GET /api/offers?Stores=1595
 
 ## /api/user/shoppinglists
 
-Lista över inköpslistor
+Lista över inköpslistor.
 
 ```
 GET /api/user/shoppinglists
@@ -318,6 +434,69 @@ GET /api/recipes/categories/general
 }
 ```
 
+## /api/recipes/categories/general/{categoryId}?RecordsPerPage=x&PageNumber=x&Include=ImageId,Title,CookingTime,AverageRating,OfferCount,IngredientCount
+
+Visa recept i kategori. Ersätt {categoryId} med id från en av kategorierna från endpoint ovan.
+
+```
+    GET /api/recipes/categories/general/88?RecordsPerPage=30&PageNumber=1&Include=ImageId,Title,CookingTime,AverageRating,OfferCount,IngredientCount
+    > AuthenticationTicket: [...]
+    < 200
+```
+```
+{
+  "CategoryName": "Lax",
+  "NumberOfPages": 31,
+  "Recipes": [
+    {
+      "Id": 688127,
+      "ImageId": 79179,
+      "Title": "Ugnsbakad lax med limecrème fraiche",
+      "PreambleHTML": null,
+      "Difficulty": null,
+      "CookingTime": "Under 30 minuter",
+      "AverageRating": "4",
+      "IngredientCount": 12,
+      "OfferCount": 1
+    },
+    ...
+    ],
+    "TotalNumberOfRecipes": 915
+}
+```
+
+
+## /api/recipes/search?RecordsPerPage=x&PageNumber=x&Phrase={phrase}&Include=ImageId,Title,CookingTime,AverageRating,OfferCount,IngredientCount
+
+Sök efter recept. Ersätt {phrase} med sökord i recept du söker efter.
+
+```
+    GET /api/recipes/search?RecordsPerPage=40&PageNumber=1&Phrase=pizza&Include=ImageId,Title,CookingTime,AverageRating,OfferCount,IngredientCount
+    > AuthenticationTicket: [...]
+    < 200
+```
+```
+{
+  "CategoryName": null,
+  "NumberOfPages": 4,
+  "Recipes": [
+    {
+      "Id": 714168,
+      "ImageId": 42438,
+      "Title": "Pizza",
+      "PreambleHTML": null,
+      "Difficulty": null,
+      "CookingTime": "Under 30 minuter",
+      "AverageRating": "3.0",
+      "IngredientCount": 7,
+      "OfferCount": 0
+    },
+    ...
+	],
+	"TotalNumberOfRecipes": 142
+}
+```
+
 ## /api/recipes/categories/general/X?PageNumber=X&RecordsPerPage=X
 
 Recept i kategori.
@@ -346,13 +525,51 @@ GET /api/recipes/categories/general/7?PageNumber=1&RecordsPerPage=50
         }
     ]
 }
+```
+
+## /api/recipes/search/filters
+
+Lista receptfilter.
+
+```
+GET /api/recipes/search/filters
+< 200
+```
+```json
+{
+  "FilterItems": [
+    {
+      "Id": 2,
+      "ImageId": null,
+      "SelectedImageId": null,
+      "Name": "Förrätt"
+    },
+    {
+      "Id": 3,
+      "ImageId": null,
+      "SelectedImageId": null,
+      "Name": "Efterrätt"
+    },
+    {
+      "Id": 4,
+      "ImageId": null,
+      "SelectedImageId": null,
+      "Name": "Huvudrätt"
+    },
+    ...
+    ]
+}
+```
 
 ## /api/recipes/recipe/XXXXXX
 
 Information om ett recept.
 
+```
 GET /api/recipes/recipe/713666
 < 200
+```
+```json
 {
     "Id": 713666,
     "Title": "Pastagratäng med kryddiga korvar",
@@ -388,7 +605,7 @@ GET /api/recipes/recipe/713666
 ```
 ## /api/recipes/XXXXXX/rating
 
-Betyg från användare
+Betyg från användare.
 
 ```
     GET /api/recipes/716405/rating
