@@ -99,7 +99,7 @@ GET /api/user/cardaccounts
 
 ## /api/user/recipes
 
-Ta fram dina sparade recept.
+Ta fram användarens sparade recept.
 
 ```
 GET /api/user/recipes
@@ -193,12 +193,12 @@ GET /api/stores/1
 
 ## /api/stores/?LastSyncDate={timestamp}
 
-Visa ICA butiker. Ersätt {timestamp} med en tidsstämpel.
+Visa ICA butiker. Ersätt {timestamp} med en tidsstämpel med formatet YYYY-MM-DD.
 
 **OBS! Tung request som returnerar mycket data!**
 
 ```
-GET /api/stores/?LastSyncDate=2014-12-01%2010:16:33
+GET /api/stores/?LastSyncDate=2014-12-01
 > AuthenticationTicket: 225DC3[..]
 < 200
 ```
