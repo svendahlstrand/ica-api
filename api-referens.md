@@ -617,3 +617,30 @@ GET /api/recipes/716405/rating
     "CurrentUserRating": 0
 }
 ```
+
+## /api/upclookup
+
+Efterfråga produktinformation för en EAN/UPC/GS1-kod. Informationen är mycket kortfattad och med varierande precision, men kan räcka för sökning, inköpslistor etc.
+
+Ingen inloggning eller kryptering behövs, så det finns ingen koppling till en viss användare eller plats. Man får alltid samma information.
+
+Det går att fråga om flera produkter på en gång, a la "7310390001383,7310751163903". Items innehåller då ett element per produkt.
+
+```
+GET /api/upclookup?upc=7310390001383
+< 200
+```
+```json
+{
+    "Items": [{
+        "Upc": "7310390001383",
+        "ItemDescription": "Soldatens ärtsoppa med Fläsk 570g Knorr",
+        "ArticleGroup": 9,
+        "ArticleGroupExtended": 9,
+        "FormatCategoryMaxi": "1118",
+        "FormatCategoryKvantum": "1118",
+        "FormatCategorySuperMarket": "1118",
+        "FormatCategoryNara": "1118"
+    }]
+}
+```
