@@ -394,6 +394,34 @@ GET /api/user/shoppinglists/XXXXXX
 }
 ```
 
+## /api/user/shoppinglists
+
+Skapa en ny inköpslista
+
+###### Request
+```
+POST /api/user/shoppinglists
+> AuthenticationTicket: [..]
+> Content-Type: application/json
+```` 
+ ```json
+{
+  "sortingStore": 0,
+  "SyncState": 0,
+  "Title": "Att handla, 25 jan 2019"
+}
+```
+###### Response
+```
+< 200
+< Content-Type: application/json
+```` 
+```json
+{
+    "Id": 6823881
+}
+```
+
 ## /api/user/shoppinglists/\<ShoppinglistId\>/sync
 
 Lägg till, ta bort och ändra i en inköpslista, sortera inköpslistan utefter butik. Ersätt \<ShoppinglistId\> med inköpslistans Id. Fyll i Parametern "SortingStore" med butikens id för att sortera listan efter ordningen i butiken.
