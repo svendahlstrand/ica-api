@@ -694,3 +694,35 @@ GET /api/upclookup?upc=7313350007203
     ]
 }
 ```
+
+## /api/status
+
+###### Request
+```
+GET /api/status
+> AuthenticationTicket: [..]
+> User-Agent: ICA Handla Android 2.4.0 (185) 9
+```
+
+###### Response
+```
+< 200
+< Content-Type: application/json
+```` 
+
+ ```json
+{
+    "VersionCheck": {
+        "AlertTitle": null,
+        "AlertDescription": null,
+        "AlertButtonTitle": null,
+        "AlertLink": null,
+        "MustUpdate": false,
+        "UpdatedVersion": 0,
+        "CustomerRole": -9
+    },
+    "Customer": {
+        "Role": 7
+    }
+}
+```
