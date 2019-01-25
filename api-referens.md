@@ -488,6 +488,40 @@ POST /api/user/shoppinglists/\<ShoppinglistId\>/sync
 }
 ```
 
+## /api/user/commonarticles/ 
+
+Hämtar en lista på frekvent använda varor
+
+###### Request
+```
+GET /api/user/commonarticles/ 
+> AuthenticationTicket: [..]
+```
+
+###### Response
+```
+< 200
+< Content-Type: application/json
+```` 
+
+ ```json
+{
+    "CommonArticles": [
+        {
+            "Id": 7601571,
+            "ProductName": "Bröd",
+            "ArticleId": 10241,
+            "ArticleGroupId": 3,
+            "ArticleGroupIdExtended": 3,
+            "FormatCategoryMaxi": "2217",
+            "FormatCategoryKvantum": "2217",
+            "FormatCategorySuperMarket": "2217",
+            "FormatCategoryNara": "2217"
+        }
+    ]
+}
+```
+
 ## /api/recipes/categories/general
 
 Listar namn på recept kategorier.
