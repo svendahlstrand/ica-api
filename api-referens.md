@@ -422,6 +422,20 @@ POST /api/user/shoppinglists
 }
 ```
 
+## /api/user/shoppinglists/\<ShoppinglistId\>
+
+Ta bort en inköpslista. \<ShoppinglistId\> ersätts med id på inköpslistan som skall tas bort.
+
+###### Request
+```
+DELETE /api/user/shoppinglists/<ShoppinglistId>
+> AuthenticationTicket: [..]
+```` 
+###### Response
+```
+< 204
+```` 
+
 ## /api/user/shoppinglists/\<ShoppinglistId\>/sync
 
 Lägg till, ta bort och ändra i en inköpslista, sortera inköpslistan utefter butik. Ersätt \<ShoppinglistId\> med inköpslistans Id. Fyll i Parametern "SortingStore" med butikens id för att sortera listan efter ordningen i butiken.
