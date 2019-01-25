@@ -394,6 +394,100 @@ GET /api/user/shoppinglists/XXXXXX
 }
 ```
 
+## /api/user/shoppinglists/\<ShoppinglistId\>/sync
+
+Lägg till, ta bort och ändra i en inköpslista, sortera inköpslistan utefter butik. Ersätt \<ShoppinglistId\> med inköpslistans Id. Fyll i Parametern "SortingStore" med butikens id för att sortera listan efter ordningen i butiken.
+
+###### Request
+```
+POST /api/user/shoppinglists/\<ShoppinglistId\>/sync
+> AuthenticationTicket: [..]
+> Content-Type: application/json
+```` 
+ ```json
+{
+    "ChangedRows": [
+        {
+            "_id": 5010,
+            "ArticleGroupId": 12,
+            "ArticleGroupIdExtended": 12,
+            "ArticleId": 0,
+            "Id": 0,
+            "InternalOrder": 11,
+            "IsStrikedOver": true,
+            "OfferId": 0,
+            "ProductName": "Test",
+            "Quantity": 0.0,
+            "RecipeId": 0,
+            "RowId": 132946775,
+            "SourceId": -1
+        }
+    ],
+    "DeletedRows": [
+        1234156
+    ],
+    "CreatedRows": [
+        {
+            "_id": 5241,
+            "ArticleGroupId": 4,
+            "ArticleGroupIdExtended": 4,
+            "ArticleId": 0,
+            "Id": 0,
+            "FormatCategoryKvantum": "3310",
+            "FormatCategoryMaxi": "3310",
+            "FormatCategoryNara": "3310",
+            "FormatCategorySuperMarket": "3310",
+            "InternalOrder": 11,
+            "IsStrikedOver": false,
+            "OfferId": 0,
+            "ProductName": "Frukt",
+            "Quantity": 1.0,
+            "RecipeId": 0,
+            "RowId": 0,
+            "SourceId": 696492,
+            "Unit": "förp"
+        }
+    ],
+    "ChangedShoppingListProperties": {
+        "SortingStore": 0,
+        "Title": "Att handla, 22 jan 2019"
+    }
+}
+```
+###### Response
+```
+< 200
+< Content-Type: application/json
+```` 
+```json
+{
+    "Id": <ShoppinglistId>,
+    "Title": "Att handla, 22 jan 2019",
+    "CommentText": null,
+    "SortingStore": 0,
+    "Rows": [
+        {
+            "RowId": 132946775,
+            "ProductName": "Test",
+            "Quantity": 0,
+            "SourceId": 1006427,
+            "IsStrikedOver": true,
+            "OfferId": null,
+            "Unit": null,
+            "RecipeId": null,
+            "InternalOrder": 11,
+            "ArticleGroupId": 12,
+            "ArticleGroupIdExtended": null,
+            "FormatCategoryMaxi": null,
+            "FormatCategoryKvantum": null,
+            "FormatCategorySuperMarket": null,
+            "FormatCategoryNara": null,
+            "ProductEan": null
+        }
+    ]
+}
+```
+
 ## /api/recipes/categories/general
 
 Listar namn på recept kategorier.
