@@ -393,6 +393,28 @@ DELETE /api/user/shoppinglists/<ShoppinglistId>
 < 204
 ```` 
 
+## /api/user/shoppinglists/\<ShoppinglistId\>
+
+Byta namn på en inköpslista. \<ShoppinglistId\> ersätts med id på inköpslistan som skall få nytt namn.
+
+###### Request
+```
+PUT /api/user/shoppinglists/<ShoppinglistId>
+> AuthenticationTicket: [..]
+```` 
+````json
+{
+  "Id": 6823881,
+  "sortingStore": 0,
+  "SyncState": 0,
+  "Title": "Att handla, 29 jan 2019"
+}
+````
+###### Response
+```
+< 200
+```` 
+
 ## /api/user/shoppinglists/\<ShoppinglistId\>/sync
 
 Lägg till, ta bort och ändra i en inköpslista, sortera inköpslistan utefter butik. Ersätt \<ShoppinglistId\> med inköpslistans Id. Fyll i Parametern "SortingStore" med butikens id för att sortera listan efter ordningen i butiken.
