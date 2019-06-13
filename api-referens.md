@@ -20,7 +20,7 @@ Response body:
 
 ## Åtkomst
 
-Du kommer åt API:et över HTTP och HTTPS på domänen `api.ica.se`. All data skickas
+Du kommer åt API:et över HTTPS på domänen `handla.api.ica.se`. All data skickas
 och tas emot som JSON. För de flesta anrop behöver tala om vem du är med hjälp
 av en `AuthenticationTicket`.
 

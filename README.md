@@ -33,7 +33,7 @@ I denna guide använder jag `curl` för att kunna visa exempel på ett enkelt s�
 
 ### Bas-URL
 
-Du kommer åt API:et över HTTP och HTTPS på domänen `api.ica.se`.
+Du kommer åt API:et över HTTPS på domänen `handla.api.ica.se`.
 
 ### Skaffa en AuthenticationTicket
 
@@ -42,7 +42,7 @@ vem du är. Den får du genom ett `GET`-anrop till `/api/login`. Skicka med
 använarnamn och lösenord med hjälp av HTTP Basic authentication.
 
 ```bash
-$ curl -i -u 7001011234:567 https://api.ica.se/api/login/
+$ curl -i -u 7001011234:567 https://handla.api.ica.se/api/login/
 HTTP/1.1 200 OK
 Cache-Control: no-cache
 Pragma: no-cache
@@ -71,7 +71,7 @@ request header.
 ```bash
 $ curl \
   -H 'AuthenticationTicket: 8D66EA[..]' \
-  https://api.ica.se/api/user/minasidor/
+  https://handla.api.ica.se/api/user/minasidor/
 HTTP/1.1 200 OK
 Cache-Control: no-cache
 Pragma: no-cache
