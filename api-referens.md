@@ -620,27 +620,34 @@ GET /api/recipes/716405/rating
 
 ## /api/upclookup
 
-Efterfråga produktinformation för en EAN/UPC/GS1-kod. Informationen är mycket kortfattad och med varierande precision, men kan räcka för sökning, inköpslistor etc.
+Efterfråga produktinformation för en EAN-kod. Informationen är mycket kortfattad och med varierande precision, men kan räcka för sökning, inköpslistor etc. Samma funktion används av ICA-appen vid streckkodsscanning i inköpslistan.
 
-Ingen inloggning eller kryptering behövs, så det finns ingen koppling till en viss användare eller plats. Man får alltid samma information.
+Ingen inloggning behövs.
 
 Det går att fråga om flera produkter på en gång, a la "7310390001383,7310751163903". Items innehåller då ett element per produkt.
 
 ```
-GET /api/upclookup?upc=7310390001383
+GET /api/upclookup?upc=7313350007203
 < 200
 ```
 ```json
 {
-    "Items": [{
-        "Upc": "7310390001383",
-        "ItemDescription": "Soldatens ärtsoppa med Fläsk 570g Knorr",
-        "ArticleGroup": 9,
-        "ArticleGroupExtended": 9,
-        "FormatCategoryMaxi": "1118",
-        "FormatCategoryKvantum": "1118",
-        "FormatCategorySuperMarket": "1118",
-        "FormatCategoryNara": "1118"
-    }]
+    "Items": [
+        {
+            "Upc": "7313350007203",
+            "ItemDescription": "Knäcke runda Original 280g Polarbröd",
+            "ArticleGroup": 3,
+            "ArticleGroupExtended": 3,
+            "FormatCategoryMaxi": "1270.10",
+            "FormatCategoryKvantum": "1270.10",
+            "FormatCategorySuperMarket": "1270.10",
+            "FormatCategoryNara": "1270.10",
+            "ProductGroup": {
+                "Category": "Bröd, kex & bageri",
+                "SubCategory": "Knäckebröd",
+                "Suggestion": "knäcke"
+            }
+        }
+    ]
 }
 ```
