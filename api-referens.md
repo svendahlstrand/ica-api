@@ -97,6 +97,49 @@ GET /api/user/cardaccounts
 }
 ```
 
+## /api/user/minbonustransaction
+
+Visar tidigare köp du gjort i ICA-butiker.
+
+```
+GET /api/user/minbonustransaction
+> AuthenticationTicket: 225DC3[..]
+< 200
+```
+```json
+{
+  "TransactionSummaryByMonth": [
+    {
+      "Year": "2019",
+      "Month": "6",
+      "YearMonthAsDateTime": "2019-06-01T00:00:00",
+      "TransactionForAMonth": [
+        {
+          "TransactionDate": "20190610",
+          "MarketingName": "ICA Supermarket Ankeborg",
+          "TotalDiscount": 0,
+          "TransactionValue": 46.5
+        }
+      ]
+    },
+    {
+      "Year": "2019",
+      "Month": "5",
+      "YearMonthAsDateTime": "2019-05-01T00:00:00",
+      "TransactionForAMonth": [
+        {
+          "TransactionDate": "20190514",
+          "MarketingName": "ICA Supermarket Ankeborg",
+          "TotalDiscount": 0,
+          "TransactionValue": 145.44
+        }
+      ]
+    },
+    ...
+  ]
+}
+```
+
 ## /api/user/recipes
 
 Ta fram användarens sparade recept.
