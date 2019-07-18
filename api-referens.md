@@ -403,7 +403,7 @@ Skapa en ny inköpslista
 POST /api/user/shoppinglists
 > AuthenticationTicket: [..]
 > Content-Type: application/json
-```` 
+````
  ```json
 {
   "sortingStore": 0,
@@ -415,7 +415,7 @@ POST /api/user/shoppinglists
 ```
 < 200
 < Content-Type: application/json
-```` 
+````
 ```json
 {
     "Id": 6823881
@@ -430,11 +430,11 @@ Ta bort en inköpslista. \<ShoppinglistId\> ersätts med id på inköpslistan so
 ```
 DELETE /api/user/shoppinglists/<ShoppinglistId>
 > AuthenticationTicket: [..]
-```` 
+````
 ###### Response
 ```
 < 204
-```` 
+````
 
 ## /api/user/shoppinglists/\<ShoppinglistId\>
 
@@ -444,7 +444,7 @@ Byta namn på en inköpslista. \<ShoppinglistId\> ersätts med id på inköpslis
 ```
 PUT /api/user/shoppinglists/<ShoppinglistId>
 > AuthenticationTicket: [..]
-```` 
+````
 ````json
 {
   "Id": 6823881,
@@ -456,7 +456,7 @@ PUT /api/user/shoppinglists/<ShoppinglistId>
 ###### Response
 ```
 < 200
-```` 
+````
 
 ## /api/user/shoppinglists/\<ShoppinglistId\>/sync
 
@@ -467,7 +467,7 @@ Lägg till, ta bort och ändra i en inköpslista, sortera inköpslistan utefter 
 POST /api/user/shoppinglists/\<ShoppinglistId\>/sync
 > AuthenticationTicket: [..]
 > Content-Type: application/json
-```` 
+````
  ```json
 {
     "ChangedRows": [
@@ -522,7 +522,7 @@ POST /api/user/shoppinglists/\<ShoppinglistId\>/sync
 ```
 < 200
 < Content-Type: application/json
-```` 
+````
 ```json
 {
     "Id": <ShoppinglistId>,
@@ -552,13 +552,13 @@ POST /api/user/shoppinglists/\<ShoppinglistId\>/sync
 }
 ```
 
-## /api/user/commonarticles/ 
+## /api/user/commonarticles/
 
 Hämtar en lista på frekvent använda varor
 
 ###### Request
 ```
-GET /api/user/commonarticles/ 
+GET /api/user/commonarticles/
 > AuthenticationTicket: [..]
 ```
 
@@ -566,7 +566,7 @@ GET /api/user/commonarticles/
 ```
 < 200
 < Content-Type: application/json
-```` 
+````
 
  ```json
 {
@@ -900,7 +900,7 @@ GET /api/status
 ```
 < 200
 < Content-Type: application/json
-```` 
+````
 
  ```json
 {
