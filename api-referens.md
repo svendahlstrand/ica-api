@@ -853,6 +853,49 @@ GET /api/recipes/716405/rating
 }
 ```
 
+## /api/recipes/random?numberofrecipes=x
+
+Hämtar slumpvist utvalda recept.
+
+```
+GET /api/recipes/random?numberofrecipes=1
+< 200
+```
+```json
+{
+    "Id": 713666,
+    "Title": "Pastagratäng med kryddiga korvar",
+    "ImageId": 35482,
+    "YouTubeId": null,
+    "IngredientGroups": [
+        {
+            "GroupName": "Ingredienser",
+            "Ingredients": [
+                {
+                    "Text": "4 port pastaskruvar",
+                    "IngredientId": 11210,
+                    "Quantity": 4,
+                    "Unit": null,
+                    "Ingredient": "port pastaskruvar"
+                },
+                {
+                    ...
+                }
+            ]
+        },
+        {
+            ...
+        }
+    ],
+    "PreambleHTML": "Recept på enkel och matig pastagratäng med kryddiga korvar som tillagas i ugn.",
+    "CurrentUsersRating": null,
+    "AverageRating": 3,
+    "Difficulty": "Medel",
+    "CookingTime": "Under 60 min",
+    "Portions": 4
+}
+```
+
 ## /api/upclookup
 
 Efterfråga produktinformation för en EAN-kod. Informationen är mycket kortfattad och med varierande precision, men kan räcka för sökning, inköpslistor etc. Samma funktion används av ICA-appen vid streckkodsscanning i inköpslistan.
