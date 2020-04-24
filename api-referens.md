@@ -700,35 +700,37 @@ GET /api/recipes/categories/general/88?RecordsPerPage=30&PageNumber=1&Include=Im
 }
 ```
 
-
-## /api/recipes/search?RecordsPerPage=x&PageNumber=x&Phrase={phrase}&Include=ImageId,Title,CookingTime,AverageRating,OfferCount,IngredientCount
+## /api/recipes/searchwithfilters?phrase={phrase}&recordsPerPage=x&pageNumber=x
 
 Sök efter recept. Ersätt {phrase} med sökord i recept du söker efter.
 
 ```
-GET /api/recipes/search?RecordsPerPage=40&PageNumber=1&Phrase=pizza&Include=ImageId,Title,CookingTime,AverageRating,OfferCount,IngredientCount
+GET /api/recipes/searchwithfilters?RecordsPerPage=40&PageNumber=1&Phrase=pizza
 > AuthenticationTicket: [...]
 < 200
 ```
 ```
 {
-  "CategoryName": null,
   "NumberOfPages": 4,
   "Recipes": [
     {
       "Id": 714168,
       "ImageId": 42438,
+      "ImageUrl": ""
       "Title": "Pizza",
       "PreambleHTML": null,
-      "Difficulty": null,
       "CookingTime": "Under 30 minuter",
+      "CookingTimeMinutes": 30,
       "AverageRating": "3.0",
+      "CommentCount": 0,
+      "AverageRating": "4.3"
       "IngredientCount": 7,
       "OfferCount": 0
     },
     ...
 	],
-	"TotalNumberOfRecipes": 142
+	"TotalNumberOfRecipes": 142,
+	"Msg": ""
 }
 ```
 
