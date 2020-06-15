@@ -84,8 +84,7 @@ Content-Length: 166
 {"CustomerNumber":123456789,"Cards":[{"Accounts":[],"CardTypeDescription":"ICA Kundkort utan betala","CardTypeCode":"90","MaskedCardNumber":"1234","Selected":false}]}
 ```
 
-Svaret får du i JSON. Här ser du till exempel hur mycket du har handlat för i år
-och din intjänade bonus.
+Svaret får du i JSON. Här ser du till exempel de kundkort du har registrerade på din användare.
 
 ### Nästa steg
 
