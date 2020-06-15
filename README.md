@@ -65,25 +65,23 @@ till nästföljande anrop.
 ### Ställ en fråga om ditt konto
 
 Nu ha du allt som behövs för att ställa frågor till API:et. Prova ett `GET`-anrop
-till `/api/user/minasidor` och skicka med din `AuthenticationTicket` som en
+till `/api/user/cardaccounts` och skicka med din `AuthenticationTicket` som en
 request header.
 
 ```bash
 $ curl \
   -H 'AuthenticationTicket: 8D66EA[..]' \
-  https://handla.api.ica.se/api/user/minasidor/
+  https://handla.api.ica.se/api/user/cardaccounts/
 HTTP/1.1 200 OK
 Cache-Control: no-cache
 Pragma: no-cache
 Content-Type: application/json; charset=utf-8
 Expires: -1
-Server: Microsoft-IIS/7.5
-X-AspNet-Version: 4.0.30319
-X-Powered-By: ASP.NET
-Date: Sun, 07 Apr 2013 18:58:17 GMT
-Content-Length: 303
+Instance: ABCVM4242A
+Date: Mon, 15 Jun 2020 09:07:19 GMT
+Content-Length: 166
 
-{"Saldo":0.0,"YearlyTotalPurchased":10000.00,"AcquiredDiscount":100.00,"AmountSinceLastBonusCheck":0.0,"AmountLeftUntilNextBonusCheck":2000.0,"NextBonusCheckValue":0.0,"AcquiredBonus":150.00,"IcaBankUrl":"http://mobil.icabanken.se","AccountNumber":"123 456 789","AvailableAmount":0.00,"CreditLimit":0.0}
+{"CustomerNumber":123456789,"Cards":[{"Accounts":[],"CardTypeDescription":"ICA Kundkort utan betala","CardTypeCode":"90","MaskedCardNumber":"1234","Selected":false}]}
 ```
 
 Svaret får du i JSON. Här ser du till exempel hur mycket du har handlat för i år

@@ -48,31 +48,6 @@ GET /api/login
 }
 ```
 
-## /api/user/minasidor
-
-Ta reda på information som rör ditt konto, saldo och rabatt.
-
-```
-GET /api/user/minasidor
-> AuthenticationTicket: 225DC3[..]
-< 200
-```
-```json
-{
-  "Saldo": 0.0,
-  "YearlyTotalPurchased": 10000.00,
-  "AcquiredDiscount": 100.00,
-  "AmountSinceLastBonusCheck": 0.0,
-  "AmountLeftUntilNextBonusCheck": 2000.0,
-  "NextBonusCheckValue": 0.0,
-  "AcquiredBonus": 150.00,
-  "IcaBankUrl": "http://mobil.icabanken.se",
-  "AccountNumber": "123 456 789",
-  "AvailableAmount": 0.00,
-  "CreditLimit": 0.0
-}
-```
-
 ## /api/user/cardaccounts
 
 Visa vilka kort som är registrerade för den inloggade användaren.
