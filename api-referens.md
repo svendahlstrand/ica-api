@@ -700,12 +700,12 @@ GET /api/recipes/categories/general/88?RecordsPerPage=30&PageNumber=1&Include=Im
 }
 ```
 
-## /api/recipes/searchwithfilters?phrase={phrase}&recordsPerPage=x&pageNumber=x
+## /api/recipes/searchwithfilters?phrase={phrase}&recordsPerPage=x&pageNumber=x&sorting=x
 
 Sök efter recept. Ersätt {phrase} med sökord i recept du söker efter.
 
 ```
-GET /api/recipes/searchwithfilters?RecordsPerPage=40&PageNumber=1&Phrase=pizza
+GET /api/recipes/searchwithfilters?recordsPerPage=40&pageNumber=1&phrase=pizza&sorting=0
 > AuthenticationTicket: [...]
 < 200
 ```
