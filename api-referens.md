@@ -24,7 +24,50 @@ Du kommer åt API:et över HTTPS på domänen `handla.api.ica.se`. All data skic
 och tas emot som JSON. För de flesta anrop behöver tala om vem du är med hjälp
 av en `AuthenticationTicket`.
 
-## /api/login
+# Anrop
+
+## Innehållsförteckning
+
+- [Autentisering](#autentisering)
+  - `GET` /api/login
+- [Kort](#kort)
+  - `GET` /api/user/cardaccounts
+- [Min Bonus](#min-bonus)
+  - `GET` /api/user/minbonustransaction
+- [Affärer](#affärer)
+  - `GET` /api/user/stores
+  - `GET` /api/stores/1
+  - `GET` /api/stores/?LastSyncDate={timestamp}
+  - `GET` /api/stores/search?Filters&Phrase={phrase}
+- [Erbjudanden](#erbjudanden)
+  - `GET` /api/offers?Stores=XXXX
+- [Inköpslistor](#inköpslistor)
+  - `GET` /api/user/shoppinglists
+  - `GET` /api/user/shoppinglist/XXXXXX
+  - `POST` /api/user/shoppinglists
+  - `DELETE` /api/user/shoppinglists/<ShoppinglistId>
+  - `PUT` /api/user/shoppinglists/<ShoppinglistId>
+  - `POST` /api/user/shoppinglists/<ShoppinglistId>/sync
+- [Vanliga artiklar](#vanliga-artiklar)
+  - `GET` /api/user/commonarticles/ + Request + Response
+- [Recept](#recept)
+  - `GET` /api/user/recipes
+  - `GET` /api/recipes/searchwithfilters?phrase={phrase}&recordsPerPage=x&pageNumber=x&sorting=x
+  - `GET` /api/recipes/search/filters
+  - `GET` /api/recipes/recipe/XXXXXX
+  - `GET` /api/recipes/XXXXXX/rating
+  - `GET` /api/recipes/random?numberofrecipes=x
+- [Receptkategorier](#receptkategorier)
+  - `GET` /api/recipes/categories/general
+  - `GET` /api/recipes/categories/general/{categoryId}?RecordsPerPage=x&PageNumber=x&Include=ImageId,Title,CookingTime,AverageRating,OfferCount,- IngredientCount
+  - `GET` /api/recipes/categories/general/X?PageNumber=X&RecordsPerPage=X
+- [Strekkodssökning](#strekkodssökning)
+  - `GET` /api/upclookup
+- [Status](#status)
+  - `GET` /api/status + Request + Response
+
+## Autentisering
+### `GET` /api/login
 
 Används för att få tag i en `AuthenticationTicket` som behövs för att tala om
 vem du är när du gör anrop till servern.
@@ -48,7 +91,9 @@ GET /api/login
 }
 ```
 
-## /api/user/cardaccounts
+## Kort
+
+### `GET` /api/user/cardaccounts
 
 Visa vilka kort som är registrerade för den inloggade användaren.
 
@@ -72,7 +117,8 @@ GET /api/user/cardaccounts
 }
 ```
 
-## /api/user/minbonustransaction
+## Min Bonus
+### `GET` /api/user/minbonustransaction
 
 Visar tidigare köp du gjort i ICA-butiker.
 
@@ -115,40 +161,9 @@ GET /api/user/minbonustransaction
 }
 ```
 
-## /api/user/recipes
+## Affärer
 
-Ta fram användarens sparade recept.
-
-```
-GET /api/user/recipes
-> AuthenticationTicket: 225DC3[..]
-< 200
-```
-```json
-{
-  "RecipeIds": [
-    720948,
-    720947,
-    721249
-  ],
-  "UserRecipes": [
-    {
-      "RecipeId": 720948,
-      "CreationDate": "2016-12-01T14:05:42"
-    },
-    {
-      "RecipeId": 720947,
-      "CreationDate": "2016-12-01T14:05:42"
-    },
-    {
-      "RecipeId": 721249,
-      "CreationDate": "2016-12-01T14:05:42"
-    }
-  ]
-}
-```
-
-## /api/user/stores
+### `GET` /api/user/stores
 
 De butiker som du oftast besöker.
 
@@ -163,7 +178,7 @@ GET /api/user/stores
 }
 ```
 
-## /api/stores/1
+### `GET` /api/stores/1
 
 Information om en butik.
 
@@ -209,7 +224,7 @@ GET /api/stores/1
 }
 ```
 
-## /api/stores/?LastSyncDate={timestamp}
+### `GET` /api/stores/?LastSyncDate={timestamp}
 
 Visa ICA butiker. Ersätt {timestamp} med en tidsstämpel med formatet YYYY-MM-DD.
 
@@ -247,7 +262,7 @@ GET /api/stores/?LastSyncDate=2014-12-01
 }
 ```
 
-## /api/stores/search?Filters&Phrase={phrase}
+### `GET` /api/stores/search?Filters&Phrase={phrase}
 
 Sök efter ICA butiker, ersätt {phrase} med ett sökord.
 
@@ -268,7 +283,9 @@ GET /api/stores/search?Filters&Phrase=lidköping
 }
 ```
 
-## /api/offers?Stores=XXXX
+## Erbjudanden
+
+### `GET` /api/offers?Stores=XXXX
 
 Listar dina erbjudanden och kuponger. Det går att skicka in flera butiks id. Separera då med komma.
 
@@ -316,15 +333,20 @@ GET /api/offers?Stores=1595
 }
 ```
 
-## /api/user/shoppinglists
+## Inköpslistor
+
+### `GET` /api/user/shoppinglists
 
 Lista över inköpslistor.
 
+###### Request
 ```
 GET /api/user/shoppinglists
 > AuthenticationTicket: [...]
 < 200
 ```
+
+###### Response
 ```json
 {
     "ShoppingLists": [
@@ -336,15 +358,18 @@ GET /api/user/shoppinglists
 }
 ```
 
-## /api/user/shoppinglist/XXXXXX
+### `GET` /api/user/shoppinglist/XXXXXX
 
-Innehållet i en inköpslista. Ersätt XXXXXX med inköpslistans Id
+Innehållet i en inköpslista. Ersätt XXXXXX med inköpslistans Id.
 
+###### Request
 ```
-GET /api/user/shoppinglists/XXXXXX
-> AuthenticationTicket: [..]
+GET /api/user/shoppinglist/XXXXXX
+> AuthenticationTicket: [...]
 < 200
 ```
+
+###### Response
 ```json
 {
     "Id": 651004,
@@ -369,135 +394,134 @@ GET /api/user/shoppinglists/XXXXXX
 }
 ```
 
-## /api/user/shoppinglists
+### `POST` /api/user/shoppinglists
 
 Skapa en ny inköpslista
 
 ###### Request
 ```
 POST /api/user/shoppinglists
-> AuthenticationTicket: [..]
-> Content-Type: application/json
-````
- ```json
+> AuthenticationTicket: [...]
+< 200
+```
+
+```json
 {
-  "sortingStore": 0,
-  "SyncState": 0,
-  "Title": "Att handla, 25 jan 2019"
+ "sortingStore": 0,
+ "SyncState": 0,
+ "Title": "Att handla, 25 jan 2019"
 }
 ```
+
 ###### Response
-```
-< 200
-< Content-Type: application/json
-````
 ```json
 {
     "Id": 6823881
 }
 ```
 
-## /api/user/shoppinglists/\<ShoppinglistId\>
+### `DELETE` /api/user/shoppinglists/<ShoppinglistId>
 
-Ta bort en inköpslista. \<ShoppinglistId\> ersätts med id på inköpslistan som skall tas bort.
+Ta bort en inköpslista. <ShoppinglistId> ersätts med id på inköpslistan som skall tas bort.
 
 ###### Request
 ```
 DELETE /api/user/shoppinglists/<ShoppinglistId>
-> AuthenticationTicket: [..]
-````
+> AuthenticationTicket: [...]
+< 200
+```
+
 ###### Response
 ```
-< 204
-````
+No content
+```
 
-## /api/user/shoppinglists/\<ShoppinglistId\>
+### `PUT` /api/user/shoppinglists/<ShoppinglistId>
 
-Byta namn på en inköpslista. \<ShoppinglistId\> ersätts med id på inköpslistan som skall få nytt namn.
+Byta namn på en inköpslista. <ShoppinglistId> ersätts med id på inköpslistan som skall få nytt namn.
 
 ###### Request
 ```
 PUT /api/user/shoppinglists/<ShoppinglistId>
-> AuthenticationTicket: [..]
-````
-````json
+> AuthenticationTicket: [...]
+< 200
+```
+```json
 {
   "Id": 6823881,
   "sortingStore": 0,
   "SyncState": 0,
   "Title": "Att handla, 29 jan 2019"
 }
-````
+```
+
 ###### Response
 ```
-< 200
-````
+No content
+```
 
-## /api/user/shoppinglists/\<ShoppinglistId\>/sync
+### `POST` /api/user/shoppinglists/<ShoppinglistId>/sync
 
-Lägg till, ta bort och ändra i en inköpslista, sortera inköpslistan utefter butik. Ersätt \<ShoppinglistId\> med inköpslistans Id. Fyll i Parametern "SortingStore" med butikens id för att sortera listan efter ordningen i butiken.
+Lägg till, ta bort och ändra i en inköpslista, sortera inköpslistan utefter butik. Ersätt <ShoppinglistId> med inköpslistans Id. Fyll i Parametern "SortingStore" med butikens id för att sortera listan efter ordningen i butiken.
 
 ###### Request
 ```
 POST /api/user/shoppinglists/\<ShoppinglistId\>/sync
-> AuthenticationTicket: [..]
-> Content-Type: application/json
-````
- ```json
+> AuthenticationTicket: [...]
+< 200
+```
+```json
 {
-    "ChangedRows": [
-        {
-            "_id": 5010,
-            "ArticleGroupId": 12,
-            "ArticleGroupIdExtended": 12,
-            "ArticleId": 0,
-            "Id": 0,
-            "InternalOrder": 11,
-            "IsStrikedOver": true,
-            "OfferId": 0,
-            "ProductName": "Test",
-            "Quantity": 0.0,
-            "RecipeId": 0,
-            "RowId": 132946775,
-            "SourceId": -1
-        }
-    ],
-    "DeletedRows": [
-        1234156
-    ],
-    "CreatedRows": [
-        {
-            "_id": 5241,
-            "ArticleGroupId": 4,
-            "ArticleGroupIdExtended": 4,
-            "ArticleId": 0,
-            "Id": 0,
-            "FormatCategoryKvantum": "3310",
-            "FormatCategoryMaxi": "3310",
-            "FormatCategoryNara": "3310",
-            "FormatCategorySuperMarket": "3310",
-            "InternalOrder": 11,
-            "IsStrikedOver": false,
-            "OfferId": 0,
-            "ProductName": "Frukt",
-            "Quantity": 1.0,
-            "RecipeId": 0,
-            "RowId": 0,
-            "SourceId": 696492,
-            "Unit": "förp"
-        }
-    ],
-    "ChangedShoppingListProperties": {
-        "SortingStore": 0,
-        "Title": "Att handla, 22 jan 2019"
-    }
+   "ChangedRows": [
+       {
+           "_id": 5010,
+           "ArticleGroupId": 12,
+           "ArticleGroupIdExtended": 12,
+           "ArticleId": 0,
+           "Id": 0,
+           "InternalOrder": 11,
+           "IsStrikedOver": true,
+           "OfferId": 0,
+           "ProductName": "Test",
+           "Quantity": 0.0,
+           "RecipeId": 0,
+           "RowId": 132946775,
+           "SourceId": -1
+       }
+   ],
+   "DeletedRows": [
+       1234156
+   ],
+   "CreatedRows": [
+       {
+           "_id": 5241,
+           "ArticleGroupId": 4,
+           "ArticleGroupIdExtended": 4,
+           "ArticleId": 0,
+           "Id": 0,
+           "FormatCategoryKvantum": "3310",
+           "FormatCategoryMaxi": "3310",
+           "FormatCategoryNara": "3310",
+           "FormatCategorySuperMarket": "3310",
+           "InternalOrder": 11,
+           "IsStrikedOver": false,
+           "OfferId": 0,
+           "ProductName": "Frukt",
+           "Quantity": 1.0,
+           "RecipeId": 0,
+           "RowId": 0,
+           "SourceId": 696492,
+           "Unit": "förp"
+       }
+   ],
+   "ChangedShoppingListProperties": {
+       "SortingStore": 0,
+       "Title": "Att handla, 22 jan 2019"
+   }
 }
 ```
+
 ###### Response
-```
-< 200
-< Content-Type: application/json
-````
 ```json
 {
     "Id": <ShoppinglistId>,
@@ -526,8 +550,43 @@ POST /api/user/shoppinglists/\<ShoppinglistId\>/sync
     ]
 }
 ```
+## Artikelgrupper
 
-## /api/user/commonarticles/
+### `GET` /api/articles/articlegroups?lastsyncdate={timestamp}
+
+Hämta alla artikelgrupper sedan ett visst datum.
+
+###### Request
+```
+GET/api/articles/articlegroups?lastsyncdate=2001-01-01
+> AuthenticationTicket: [...]
+< 200
+```
+
+###### Response
+```json
+{
+    "ArticleGroups": [
+        {
+            "Id": 3,
+            "Name": "Bröd, kex och bageri",
+            "ParentId": 1,
+            "LastSyncDate": "2015-09-18T08:45:55"
+        },
+        {
+            "Id": 4,
+            "Name": "Frukt & Grönt",
+            "ParentId": 1,
+            "LastSyncDate": "2015-06-02T15:03:20"
+        },
+        // [...]
+    ]
+}
+```
+
+## Vanliga Artiklar
+
+### `GET` /api/user/commonarticles/
 
 Hämtar en lista på frekvent använda varor
 
@@ -561,7 +620,212 @@ GET /api/user/commonarticles/
 }
 ```
 
-## /api/recipes/categories/general
+## Recept
+
+### `GET` /api/user/recipes
+
+Ta fram användarens sparade recept.
+
+```
+GET /api/user/recipes
+> AuthenticationTicket: 225DC3[..]
+< 200
+```
+```json
+{
+  "RecipeIds": [
+    720948,
+    720947,
+    721249
+  ],
+  "UserRecipes": [
+    {
+      "RecipeId": 720948,
+      "CreationDate": "2016-12-01T14:05:42"
+    },
+    {
+      "RecipeId": 720947,
+      "CreationDate": "2016-12-01T14:05:42"
+    },
+    {
+      "RecipeId": 721249,
+      "CreationDate": "2016-12-01T14:05:42"
+    }
+  ]
+}
+```
+
+### `GET` /api/recipes/searchwithfilters?phrase={phrase}&recordsPerPage=x&pageNumber=x&sorting=x
+
+Sök efter recept. Ersätt {phrase} med sökord i recept du söker efter.
+
+```
+GET /api/recipes/searchwithfilters?recordsPerPage=40&pageNumber=1&phrase=pizza&sorting=0
+> AuthenticationTicket: [...]
+< 200
+```
+```
+{
+  "NumberOfPages": 4,
+  "Recipes": [
+    {
+      "Id": 714168,
+      "ImageId": 42438,
+      "ImageUrl": ""
+      "Title": "Pizza",
+      "PreambleHTML": null,
+      "CookingTime": "Under 30 minuter",
+      "CookingTimeMinutes": 30,
+      "AverageRating": "3.0",
+      "CommentCount": 0,
+      "AverageRating": "4.3"
+      "IngredientCount": 7,
+      "OfferCount": 0
+    },
+    ...
+	],
+	"TotalNumberOfRecipes": 142,
+	"Msg": ""
+}
+```
+
+### `GET` /api/recipes/search/filters
+
+Lista receptfilter.
+
+```
+GET /api/recipes/search/filters
+< 200
+```
+```json
+{
+  "FilterItems": [
+    {
+      "Id": 2,
+      "ImageId": null,
+      "SelectedImageId": null,
+      "Name": "Förrätt"
+    },
+    {
+      "Id": 3,
+      "ImageId": null,
+      "SelectedImageId": null,
+      "Name": "Efterrätt"
+    },
+    {
+      "Id": 4,
+      "ImageId": null,
+      "SelectedImageId": null,
+      "Name": "Huvudrätt"
+    },
+    ...
+    ]
+}
+```
+
+### `GET` /api/recipes/recipe/XXXXXX
+
+Information om ett recept.
+
+```
+GET /api/recipes/recipe/713666
+< 200
+```
+```json
+{
+    "Id": 713666,
+    "Title": "Pastagratäng med kryddiga korvar",
+    "ImageId": 35482,
+    "YouTubeId": null,
+    "IngredientGroups": [
+        {
+            "GroupName": "Ingredienser",
+            "Ingredients": [
+                {
+                    "Text": "4 port pastaskruvar",
+                    "IngredientId": 11210,
+                    "Quantity": 4,
+                    "Unit": null,
+                    "Ingredient": "port pastaskruvar"
+                },
+                {
+                    ...
+                }
+            ]
+        },
+        {
+            ...
+        }
+    ],
+    "PreambleHTML": "Recept på enkel och matig pastagratäng med kryddiga korvar som tillagas i ugn.",
+    "CurrentUsersRating": null,
+    "AverageRating": 3,
+    "Difficulty": "Medel",
+    "CookingTime": "Under 60 min",
+    "Portions": 4
+}
+```
+### `GET` /api/recipes/XXXXXX/rating
+
+Betyg från användare.
+
+```
+GET /api/recipes/716405/rating
+> AuthenticationTicket: [...]
+< 200
+```
+```json
+{
+    "CurrentUserRating": 0
+}
+```
+
+### `GET` /api/recipes/random?numberofrecipes=x
+
+Hämtar slumpvist utvalda recept.
+
+```
+GET /api/recipes/random?numberofrecipes=1
+< 200
+```
+```json
+{
+    "Id": 713666,
+    "Title": "Pastagratäng med kryddiga korvar",
+    "ImageId": 35482,
+    "YouTubeId": null,
+    "IngredientGroups": [
+        {
+            "GroupName": "Ingredienser",
+            "Ingredients": [
+                {
+                    "Text": "4 port pastaskruvar",
+                    "IngredientId": 11210,
+                    "Quantity": 4,
+                    "Unit": null,
+                    "Ingredient": "port pastaskruvar"
+                },
+                {
+                    ...
+                }
+            ]
+        },
+        {
+            ...
+        }
+    ],
+    "PreambleHTML": "Recept på enkel och matig pastagratäng med kryddiga korvar som tillagas i ugn.",
+    "CurrentUsersRating": null,
+    "AverageRating": 3,
+    "Difficulty": "Medel",
+    "CookingTime": "Under 60 min",
+    "Portions": 4
+}
+```
+
+## Receptkategorier
+
+### `GET` /api/recipes/categories/general
 
 Listar namn på recept kategorier.
 
@@ -644,7 +908,7 @@ GET /api/recipes/categories/general
 }
 ```
 
-## /api/recipes/categories/general/{categoryId}?RecordsPerPage=x&PageNumber=x&Include=ImageId,Title,CookingTime,AverageRating,OfferCount,IngredientCount
+### `GET` /api/recipes/categories/general/{categoryId}?RecordsPerPage=x&PageNumber=x&Include=ImageId,Title,CookingTime,AverageRating,OfferCount,IngredientCount
 
 Visa recept i kategori. Ersätt {categoryId} med id från en av kategorierna från endpoint ovan.
 
@@ -675,41 +939,7 @@ GET /api/recipes/categories/general/88?RecordsPerPage=30&PageNumber=1&Include=Im
 }
 ```
 
-## /api/recipes/searchwithfilters?phrase={phrase}&recordsPerPage=x&pageNumber=x&sorting=x
-
-Sök efter recept. Ersätt {phrase} med sökord i recept du söker efter.
-
-```
-GET /api/recipes/searchwithfilters?recordsPerPage=40&pageNumber=1&phrase=pizza&sorting=0
-> AuthenticationTicket: [...]
-< 200
-```
-```
-{
-  "NumberOfPages": 4,
-  "Recipes": [
-    {
-      "Id": 714168,
-      "ImageId": 42438,
-      "ImageUrl": ""
-      "Title": "Pizza",
-      "PreambleHTML": null,
-      "CookingTime": "Under 30 minuter",
-      "CookingTimeMinutes": 30,
-      "AverageRating": "3.0",
-      "CommentCount": 0,
-      "AverageRating": "4.3"
-      "IngredientCount": 7,
-      "OfferCount": 0
-    },
-    ...
-	],
-	"TotalNumberOfRecipes": 142,
-	"Msg": ""
-}
-```
-
-## /api/recipes/categories/general/X?PageNumber=X&RecordsPerPage=X
+### `GET` /api/recipes/categories/general/X?PageNumber=X&RecordsPerPage=X
 
 Recept i kategori.
 
@@ -739,141 +969,9 @@ GET /api/recipes/categories/general/7?PageNumber=1&RecordsPerPage=50
 }
 ```
 
-## /api/recipes/search/filters
+## Strekkodssökning
 
-Lista receptfilter.
-
-```
-GET /api/recipes/search/filters
-< 200
-```
-```json
-{
-  "FilterItems": [
-    {
-      "Id": 2,
-      "ImageId": null,
-      "SelectedImageId": null,
-      "Name": "Förrätt"
-    },
-    {
-      "Id": 3,
-      "ImageId": null,
-      "SelectedImageId": null,
-      "Name": "Efterrätt"
-    },
-    {
-      "Id": 4,
-      "ImageId": null,
-      "SelectedImageId": null,
-      "Name": "Huvudrätt"
-    },
-    ...
-    ]
-}
-```
-
-## /api/recipes/recipe/XXXXXX
-
-Information om ett recept.
-
-```
-GET /api/recipes/recipe/713666
-< 200
-```
-```json
-{
-    "Id": 713666,
-    "Title": "Pastagratäng med kryddiga korvar",
-    "ImageId": 35482,
-    "YouTubeId": null,
-    "IngredientGroups": [
-        {
-            "GroupName": "Ingredienser",
-            "Ingredients": [
-                {
-                    "Text": "4 port pastaskruvar",
-                    "IngredientId": 11210,
-                    "Quantity": 4,
-                    "Unit": null,
-                    "Ingredient": "port pastaskruvar"
-                },
-                {
-                    ...
-                }
-            ]
-        },
-        {
-            ...
-        }
-    ],
-    "PreambleHTML": "Recept på enkel och matig pastagratäng med kryddiga korvar som tillagas i ugn.",
-    "CurrentUsersRating": null,
-    "AverageRating": 3,
-    "Difficulty": "Medel",
-    "CookingTime": "Under 60 min",
-    "Portions": 4
-}
-```
-## /api/recipes/XXXXXX/rating
-
-Betyg från användare.
-
-```
-GET /api/recipes/716405/rating
-> AuthenticationTicket: [...]
-< 200
-```
-```json
-{
-    "CurrentUserRating": 0
-}
-```
-
-## /api/recipes/random?numberofrecipes=x
-
-Hämtar slumpvist utvalda recept.
-
-```
-GET /api/recipes/random?numberofrecipes=1
-< 200
-```
-```json
-{
-    "Id": 713666,
-    "Title": "Pastagratäng med kryddiga korvar",
-    "ImageId": 35482,
-    "YouTubeId": null,
-    "IngredientGroups": [
-        {
-            "GroupName": "Ingredienser",
-            "Ingredients": [
-                {
-                    "Text": "4 port pastaskruvar",
-                    "IngredientId": 11210,
-                    "Quantity": 4,
-                    "Unit": null,
-                    "Ingredient": "port pastaskruvar"
-                },
-                {
-                    ...
-                }
-            ]
-        },
-        {
-            ...
-        }
-    ],
-    "PreambleHTML": "Recept på enkel och matig pastagratäng med kryddiga korvar som tillagas i ugn.",
-    "CurrentUsersRating": null,
-    "AverageRating": 3,
-    "Difficulty": "Medel",
-    "CookingTime": "Under 60 min",
-    "Portions": 4
-}
-```
-
-## /api/upclookup
+### `GET` /api/upclookup
 
 Efterfråga produktinformation för en EAN-kod. Informationen är mycket kortfattad och med varierande precision, men kan räcka för sökning, inköpslistor etc. Samma funktion används av ICA-appen vid streckkodsscanning i inköpslistan.
 
@@ -907,7 +1005,9 @@ GET /api/upclookup?upc=7313350007203
 }
 ```
 
-## /api/status
+## Status
+
+### `GET` /api/status
 
 ###### Request
 ```
