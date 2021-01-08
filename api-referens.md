@@ -42,12 +42,8 @@ av en `AuthenticationTicket`.
 - [Erbjudanden](#erbjudanden)
   - `GET` /api/offers?Stores=XXXX
 - [Inköpslistor](#inköpslistor)
-  - `GET` /api/user/shoppinglists
-  - `GET` /api/user/shoppinglist/XXXXXX
-  - `POST` /api/user/shoppinglists
-  - `DELETE` /api/user/shoppinglists/<ShoppinglistId>
-  - `PUT` /api/user/shoppinglists/<ShoppinglistId>
-  - `POST` /api/user/shoppinglists/<ShoppinglistId>/sync
+- [Artikelgrupper](#artikelgrupper)
+  - `GET` /api/articles/articlegroups?lastsyncdate={timestamp}
 - [Vanliga artiklar](#vanliga-artiklar)
   - `GET` /api/user/commonarticles/ + Request + Response
 - [Recept](#recept)
@@ -335,13 +331,13 @@ GET /api/offers?Stores=1595
 
 ## Inköpslistor
 
-### `GET` /api/user/shoppinglists
+### `GET` /api/user/offlineshoppinglists
 
-Lista över inköpslistor.
+Hämta alla inköpslistor.
 
 ###### Request
 ```
-GET /api/user/shoppinglists
+GET /api/user/offlineshoppinglists
 > AuthenticationTicket: [...]
 < 200
 ```
@@ -349,22 +345,43 @@ GET /api/user/shoppinglists
 ###### Response
 ```json
 {
-    "ShoppingLists": [
+  "ShoppingLists": [
+    {
+      "Id": 1,
+      "Title": "Handla 08 januari",
+      "CommentText": "",
+      "SortingStore": 0,
+      "Rows": [
         {
-            "Id": 651004,
-            "Title": "Inköpslistan"
+          "RowId": 1,
+          "ProductName": "Wrap tortilla",
+          "Quantity": 0.000,
+          "SourceId": 1,
+          "IsStrikedOver": false,
+          "InternalOrder": 1,
+          "ArticleGroupId": 9,
+          "ArticleGroupIdExtended": 9,
+          "LatestChange": "2021-01-08T16:25:01Z",
+          "OfflineId": "xxxxxx",
+          "IsSmartItem": false
         }
-    ]
+      ],
+      "LatestChange": "2021-01-08T16:25:05Z",
+      "OfflineId": "xxxxxx",
+      "IsPrivate": false,
+      "IsSmartList": false
+    }
+  ]
 }
 ```
 
-### `GET` /api/user/shoppinglist/XXXXXX
+### `GET` /api/user/offlineshoppinglists/\<OfflineId\>
 
-Innehållet i en inköpslista. Ersätt XXXXXX med inköpslistans Id.
+Hämta en specifik inköpslista. Lägg märke till att `OfflineId` måste användas i URLen och inte `Id`.
 
 ###### Request
 ```
-GET /api/user/shoppinglist/XXXXXX
+GET /api/user/offlineshoppinglists/\<OfflineId\>
 > AuthenticationTicket: [...]
 < 200
 ```
@@ -372,61 +389,164 @@ GET /api/user/shoppinglist/XXXXXX
 ###### Response
 ```json
 {
-    "Id": 651004,
-    "Title": "Inköpslistan",
-    "CommentText": "",
-    "SortingStore": 1595,
-    "Rows": [
-        {
-            "RowId": 20083774,
-            "ProductName": "Broccoli",
-            "Quantity": 250,
-            "SourceId": -1,
-            "IsStrikedOver": true,
-            "OfferId": null,
-            "Unit": "g",
-            "RecipeId": 716262,
-            "InternalOrder": 3,
-            "ArticleGroupId": 4
-        },
-        ...
-    ]
+  "Id": 1,
+  "Title": "Handla 08 januari",
+  "CommentText": "",
+  "SortingStore": 0,
+  "Rows": [
+    {
+      "RowId": 1,
+      "ProductName": "Wrap tortilla",
+      "Quantity": 0.000,
+      "SourceId": 1,
+      "IsStrikedOver": false,
+      "InternalOrder": 1,
+      "ArticleGroupId": 9,
+      "ArticleGroupIdExtended": 9,
+      "LatestChange": "2021-01-08T16:25:01Z",
+      "OfflineId": "xxxxxx",
+      "IsSmartItem": false
+    }
+  ],
+  "LatestChange": "2021-01-08T16:25:05Z",
+  "OfflineId": "xxxxxx",
+  "IsPrivate": false,
+  "IsSmartList": false
 }
 ```
 
-### `POST` /api/user/shoppinglists
+### `POST` /api/user/offlineshoppinglists/\<OfflineId\>/sync
 
-Skapa en ny inköpslista
+Synka den lokala shoppinglistan till servern. Produkter med `"SourceId": -1` är produkter som ännu inte finns på servern.
 
 ###### Request
 ```
-POST /api/user/shoppinglists
+POST /api/user/offlineshoppinglists/\<OfflineId\>/sync
 > AuthenticationTicket: [...]
 < 200
 ```
 
 ```json
 {
- "sortingStore": 0,
- "SyncState": 0,
- "Title": "Att handla, 25 jan 2019"
+  "Id": 1,
+  "Title": "Handla 08 januari",
+  "CommentText": "",
+  "SortingStore": 0,
+  "Rows": [
+    {
+      "RowId": 1,
+      "ProductName": "Wrap tortilla",
+      "Quantity": 0.000,
+      "SourceId": 1,
+      "IsStrikedOver": false,
+      "InternalOrder": 2,
+      "ArticleGroupId": 9,
+      "ArticleGroupIdExtended": 9,
+      "LatestChange": "2021-01-08T21:42:52Z",
+      "OfflineId": "xxxxxx",
+      "IsSmartItem": false
+    },
+    {
+      "RowId": 1,
+      "ProductName": "Banan",
+      "Quantity": 0.000,
+      "SourceId": -1,
+      "IsStrikedOver": false,
+      "InternalOrder": 3,
+      "ArticleGroupId": 4,
+      "ArticleGroupIdExtended": 4,
+      "ProductEan": "",
+      "LatestChange": "2021-01-08T21:42:52Z",
+      "OfflineId": "xxxxxx",
+      "IsSmartItem": false
+    }
+  ],
+  "LatestChange": "2021-01-08T21:42:52Z",
+  "OfflineId": "xxxxxx",
+  "IsPrivate": false,
+  "IsSmartList": false
 }
 ```
 
 ###### Response
 ```json
 {
-    "Id": 6823881
+  "Id": 1,
+  "Title": "Handla 08 januari",
+  "CommentText": "",
+  "SortingStore": 0,
+  "Rows": [
+    {
+      "RowId": 1,
+      "ProductName": "Wrap tortilla",
+      "Quantity": 0.000,
+      "SourceId": 1,
+      "IsStrikedOver": false,
+      "InternalOrder": 2,
+      "ArticleGroupId": 9,
+      "ArticleGroupIdExtended": 9,
+      "LatestChange": "2021-01-08T21:42:52Z",
+      "OfflineId": "xxxxxx",
+      "IsSmartItem": false
+    },
+    {
+      "RowId": 1,
+      "ProductName": "Banan",
+      "Quantity": 0.000,
+      "SourceId": 0,
+      "IsStrikedOver": false,
+      "InternalOrder": 3,
+      "ArticleGroupId": 4,
+      "ArticleGroupIdExtended": 4,
+      "ProductEan": "",
+      "LatestChange": "2021-01-08T21:42:52Z",
+      "OfflineId": "xxxxxx",
+      "IsSmartItem": false
+    }
+  ],
+  "LatestChange": "2021-01-08T21:42:52Z",
+  "OfflineId": "xxxxxx",
+  "IsPrivate": false,
+  "IsSmartList": false
 }
 ```
 
-### `DELETE` /api/user/shoppinglists/<ShoppinglistId>
+### `POST` /api/user/offlineshoppinglists
 
-Ta bort en inköpslista. <ShoppinglistId> ersätts med id på inköpslistan som skall tas bort.
+Skapa en ny inköpslista.
 
 ###### Request
 ```
-DELETE /api/user/shoppinglists/<ShoppinglistId>
+POST /api/user/offlineshoppinglists
+> AuthenticationTicket: [...]
+< 200
+```
+
+```json
+{
+  "OfflineId": "xxxxxx",
+  "Title": "Min fina inköpslista",
+  "CommentText": "",
+  "SortingStore": 0,
+  "Rows": [],
+  "LatestChange": "2021-01-08T22:52:33Z"
+}
+```
+
+###### Response
+```json
+{
+  "Id": 1
+}
+```
+
+### `DELETE` /api/user/offlineshoppinglists/<OfflineId>
+
+Ta bort en inköpslista.
+
+###### Request
+```
+DELETE /api/user/offlineshoppinglists/<OfflineId>
 > AuthenticationTicket: [...]
 < 200
 ```
@@ -436,120 +556,6 @@ DELETE /api/user/shoppinglists/<ShoppinglistId>
 No content
 ```
 
-### `PUT` /api/user/shoppinglists/<ShoppinglistId>
-
-Byta namn på en inköpslista. <ShoppinglistId> ersätts med id på inköpslistan som skall få nytt namn.
-
-###### Request
-```
-PUT /api/user/shoppinglists/<ShoppinglistId>
-> AuthenticationTicket: [...]
-< 200
-```
-```json
-{
-  "Id": 6823881,
-  "sortingStore": 0,
-  "SyncState": 0,
-  "Title": "Att handla, 29 jan 2019"
-}
-```
-
-###### Response
-```
-No content
-```
-
-### `POST` /api/user/shoppinglists/<ShoppinglistId>/sync
-
-Lägg till, ta bort och ändra i en inköpslista, sortera inköpslistan utefter butik. Ersätt <ShoppinglistId> med inköpslistans Id. Fyll i Parametern "SortingStore" med butikens id för att sortera listan efter ordningen i butiken.
-
-###### Request
-```
-POST /api/user/shoppinglists/\<ShoppinglistId\>/sync
-> AuthenticationTicket: [...]
-< 200
-```
-```json
-{
-   "ChangedRows": [
-       {
-           "_id": 5010,
-           "ArticleGroupId": 12,
-           "ArticleGroupIdExtended": 12,
-           "ArticleId": 0,
-           "Id": 0,
-           "InternalOrder": 11,
-           "IsStrikedOver": true,
-           "OfferId": 0,
-           "ProductName": "Test",
-           "Quantity": 0.0,
-           "RecipeId": 0,
-           "RowId": 132946775,
-           "SourceId": -1
-       }
-   ],
-   "DeletedRows": [
-       1234156
-   ],
-   "CreatedRows": [
-       {
-           "_id": 5241,
-           "ArticleGroupId": 4,
-           "ArticleGroupIdExtended": 4,
-           "ArticleId": 0,
-           "Id": 0,
-           "FormatCategoryKvantum": "3310",
-           "FormatCategoryMaxi": "3310",
-           "FormatCategoryNara": "3310",
-           "FormatCategorySuperMarket": "3310",
-           "InternalOrder": 11,
-           "IsStrikedOver": false,
-           "OfferId": 0,
-           "ProductName": "Frukt",
-           "Quantity": 1.0,
-           "RecipeId": 0,
-           "RowId": 0,
-           "SourceId": 696492,
-           "Unit": "förp"
-       }
-   ],
-   "ChangedShoppingListProperties": {
-       "SortingStore": 0,
-       "Title": "Att handla, 22 jan 2019"
-   }
-}
-```
-
-###### Response
-```json
-{
-    "Id": <ShoppinglistId>,
-    "Title": "Att handla, 22 jan 2019",
-    "CommentText": null,
-    "SortingStore": 0,
-    "Rows": [
-        {
-            "RowId": 132946775,
-            "ProductName": "Test",
-            "Quantity": 0,
-            "SourceId": 1006427,
-            "IsStrikedOver": true,
-            "OfferId": null,
-            "Unit": null,
-            "RecipeId": null,
-            "InternalOrder": 11,
-            "ArticleGroupId": 12,
-            "ArticleGroupIdExtended": null,
-            "FormatCategoryMaxi": null,
-            "FormatCategoryKvantum": null,
-            "FormatCategorySuperMarket": null,
-            "FormatCategoryNara": null,
-            "ProductEan": null
-        }
-    ]
-}
-```
 ## Artikelgrupper
 
 ### `GET` /api/articles/articlegroups?lastsyncdate={timestamp}
