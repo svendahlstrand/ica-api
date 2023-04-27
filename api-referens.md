@@ -59,8 +59,6 @@ av en `AuthenticationTicket`.
   - `GET` /api/recipes/categories/general/X?PageNumber=X&RecordsPerPage=X
 - [Strekkodssökning](#strekkodssökning)
   - `GET` /api/upclookup
-- [Status](#status)
-  - `GET` /api/status + Request + Response
 
 ## Autentisering
 ### `GET` /api/login
@@ -981,8 +979,6 @@ GET /api/recipes/categories/general/7?PageNumber=1&RecordsPerPage=50
 
 Efterfråga produktinformation för en EAN-kod. Informationen är mycket kortfattad och med varierande precision, men kan räcka för sökning, inköpslistor etc. Samma funktion används av ICA-appen vid streckkodsscanning i inköpslistan.
 
-Ingen inloggning behövs.
-
 Det går att fråga om flera produkter på en gång, a la "7310390001383,7310751163903". Items innehåller då ett element per produkt.
 
 ```
@@ -1008,39 +1004,5 @@ GET /api/upclookup?upc=7313350007203
             }
         }
     ]
-}
-```
-
-## Status
-
-### `GET` /api/status
-
-###### Request
-```
-GET /api/status
-> AuthenticationTicket: [..]
-> User-Agent: ICA Handla Android 2.4.0 (185) 9
-```
-
-###### Response
-```
-< 200
-< Content-Type: application/json
-````
-
- ```json
-{
-    "VersionCheck": {
-        "AlertTitle": null,
-        "AlertDescription": null,
-        "AlertButtonTitle": null,
-        "AlertLink": null,
-        "MustUpdate": false,
-        "UpdatedVersion": 0,
-        "CustomerRole": -9
-    },
-    "Customer": {
-        "Role": 7
-    }
 }
 ```
