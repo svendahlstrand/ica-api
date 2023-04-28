@@ -22,7 +22,7 @@ Response body:
 
 Du kommer åt API:et över HTTPS på domänen `handla.api.ica.se`. All data skickas
 och tas emot som JSON. För de flesta anrop behöver tala om vem du är med hjälp
-av en `AuthenticationTicket`.
+av en <code><a href="#autentisering">AuthenticationTicket</a></code>.
 
 # Anrop
 
@@ -977,12 +977,13 @@ GET /api/recipes/categories/general/7?PageNumber=1&RecordsPerPage=50
 
 ### `GET` /api/upclookup
 
-Efterfråga produktinformation för en EAN-kod. Informationen är mycket kortfattad och med varierande precision, men kan räcka för sökning, inköpslistor etc. Samma funktion används av ICA-appen vid streckkodsscanning i inköpslistan.
+Efterfråga artikelinformation för en EAN-kod. Informationen är mycket kortfattad men kan räcka för sökning, inköpslistor och så vidare.
 
-Det går att fråga om flera produkter på en gång, a la "7310390001383,7310751163903". Items innehåller då ett element per produkt.
+Det går att fråga om flera artiklar på en gång, a la "7310390001383,7310751163903". Items innehåller då ett element per artikel.
 
 ```
 GET /api/upclookup?upc=7313350007203
+> AuthenticationTicket: [...]
 < 200
 ```
 ```json
