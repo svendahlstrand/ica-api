@@ -67,7 +67,7 @@ Används för att få tag i en `AuthenticationTicket` som behövs för att tala 
 vem du är när du gör anrop till servern.
 
 Du använder HTTP Basic authentication med användarnamn och lösenord som du
-[skaffar hos ICA](https://github.com/svendahlstrand/ica-api#skaffa-anvndarnamn-och-lsenord).
+[skaffar hos ICA](https://github.com/svendahlstrand/ica-api#skaffa-användarnamn-och-lösenord).
 
 ```
 GET /api/login
